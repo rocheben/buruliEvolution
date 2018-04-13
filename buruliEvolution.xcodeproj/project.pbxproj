@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		6253D88020812AF00064D151 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6253D87F20812AF00064D151 /* main.cpp */; };
+		6253D88B20814FB90064D151 /* agent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6253D88920814FB90064D151 /* agent.cpp */; };
+		6253D88E20814FE10064D151 /* Lake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6253D88C20814FE10064D151 /* Lake.cpp */; };
+		6253D89120814FED0064D151 /* Pathogen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6253D88F20814FED0064D151 /* Pathogen.cpp */; };
+		6253D897208150920064D151 /* model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6253D895208150920064D151 /* model.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +29,16 @@
 /* Begin PBXFileReference section */
 		6253D87C20812AF00064D151 /* buruliEvolution */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = buruliEvolution; sourceTree = BUILT_PRODUCTS_DIR; };
 		6253D87F20812AF00064D151 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		6253D88920814FB90064D151 /* agent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = agent.cpp; sourceTree = "<group>"; };
+		6253D88A20814FB90064D151 /* agent.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = agent.hpp; sourceTree = "<group>"; };
+		6253D88C20814FE10064D151 /* Lake.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Lake.cpp; sourceTree = "<group>"; };
+		6253D88D20814FE10064D151 /* Lake.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Lake.hpp; sourceTree = "<group>"; };
+		6253D88F20814FED0064D151 /* Pathogen.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Pathogen.cpp; sourceTree = "<group>"; };
+		6253D89020814FED0064D151 /* Pathogen.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Pathogen.hpp; sourceTree = "<group>"; };
+		6253D893208150140064D151 /* list.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = list.hpp; sourceTree = "<group>"; };
+		6253D895208150920064D151 /* model.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = model.cpp; sourceTree = "<group>"; };
+		6253D896208150920064D151 /* model.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = model.hpp; sourceTree = "<group>"; };
+		6253D898208150D40064D151 /* random.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = random.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +71,17 @@
 		6253D87E20812AF00064D151 /* buruliEvolution */ = {
 			isa = PBXGroup;
 			children = (
+				6253D88C20814FE10064D151 /* Lake.cpp */,
+				6253D88D20814FE10064D151 /* Lake.hpp */,
+				6253D88F20814FED0064D151 /* Pathogen.cpp */,
+				6253D89020814FED0064D151 /* Pathogen.hpp */,
+				6253D898208150D40064D151 /* random.h */,
 				6253D87F20812AF00064D151 /* main.cpp */,
+				6253D88920814FB90064D151 /* agent.cpp */,
+				6253D88A20814FB90064D151 /* agent.hpp */,
+				6253D893208150140064D151 /* list.hpp */,
+				6253D895208150920064D151 /* model.cpp */,
+				6253D896208150920064D151 /* model.hpp */,
 			);
 			path = buruliEvolution;
 			sourceTree = "<group>";
@@ -118,7 +142,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6253D897208150920064D151 /* model.cpp in Sources */,
+				6253D88E20814FE10064D151 /* Lake.cpp in Sources */,
 				6253D88020812AF00064D151 /* main.cpp in Sources */,
+				6253D88B20814FB90064D151 /* agent.cpp in Sources */,
+				6253D89120814FED0064D151 /* Pathogen.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
