@@ -38,8 +38,9 @@ Model::Model(char* pSuffixe,float pTimeStep){
     intervalMigration=150;
     timeStep=pTimeStep;
     indexAgent=0;
-    intervalWrite=7;
+    intervalWrite=365;
     interceptInfPeriod=0.0;
+    genomeLength=100000;
 }
 
 bool Model::checkPreviousSimulations(){
@@ -70,6 +71,10 @@ void Model::Init(){
     sprintf(lFileName,"%u",randomObject->getSeed());
     fwrite(lFileName,1,strlen(lFileName),lFile);
     fclose(lFile);
+    sprintf(lFileName,"%s_sequences.dat",output);
+    FILE* lFileSeq=fopen(lFileName,"wt");
+    sprintf(lFileName,"%s_tree.dat",output);
+    FILE* lFileTree=fopen(lFileName,"wt");
     if(outputAll!=0){
         sprintf(lFileName,"%s/output_All_Anti_%s.dat",outputFolder,output);
         lFile=fopen(lFileName,"wt");
@@ -83,6 +88,7 @@ void Model::Init(){
         sprintf(lFileName,"%s/output_All_Pop_%s.dat",outputFolder,output);
         lFile=fopen(lFileName,"wt");
         fclose(lFile);
+        
     }
     year=0;
     strcpy(dataOutputAllAnti,"");
@@ -254,6 +260,10 @@ void Model::loadPathogensSpecies(){
     fclose(lFile);
 }
 
+long Model::getGenomeLength(){
+    return genomeLength;
+}
+
 /** Load trade-off parameters*/
 /*    void Model::loadTradeOff(char* pFileName){
  char lLine[2048];
@@ -396,6 +406,8 @@ void Model::goNormal(){
         infectiousInd->removeAllPathogens();
         infectiousIndWb->removeAllPathogens();
         
+        theLake->evtEvolution();
+        
         //Birth and death events
         ListPerso lAdd;
         ListPerso lRemove;
@@ -476,6 +488,8 @@ void Model::goOptimized(){
                 lNbExpected+=lProba*agentListPerso->length();
             }
         }
+        
+        theLake->evtEvolution();
         
         // Computing the average number of infectious individuals by environmental transmission
         ListPerso lPathog;
@@ -613,6 +627,7 @@ bool Model::allDataWrite(bool pWriteAll){
         }
         lWrite=false;
     }
+    writeSequenceData();
     return lWrite;
 }
 
@@ -635,17 +650,17 @@ bool Model::loadParams(char* pFileName){
                 sscanf(lLine,"%s\t%s",lName,lValue);
                 if(strstr(lName,"tMax")!=0){tMax=atoi(lValue);}
                 if(strcmp(lName,"outputFolder")==0){
-                    int lLength=strlen(lLine)-strlen("outputFolder")-2;
+                    int lLength=(int)(strlen(lLine)-strlen("outputFolder")-2);
                     strncpy(outputFolder,lLine+strlen("outputFolder")+1,strlen(lLine)-strlen("outputFolder")-2);
                     outputFolder[lLength]='\0';
                 }
                 if(strstr(lName,"birdsFile")!=0){
-                    int lLength=strlen(lLine)-strlen("birdsFile")-2;
+                    int lLength=(int)(strlen(lLine)-strlen("birdsFile")-2);
                     strncpy(birdsFile,lLine+strlen("birdsFile")+1,strlen(lLine)-strlen("birdsFile")-2);
                     birdsFile[lLength]='\0';
                 }
                 if(strstr(lName,"pathogensFile")!=0){
-                    int lLength=strlen(lLine)-strlen("pathogensFile")-2;
+                    int lLength=(int)(strlen(lLine)-strlen("pathogensFile")-2);
                     strncpy(pathogensFile,lLine+strlen("pathogensFile")+1,strlen(lLine)-strlen("pathogensFile")-2);
                     pathogensFile[lLength]='\0';
                 }
@@ -678,6 +693,10 @@ bool Model::loadParams(char* pFileName){
 
 void Model::getNbInfect(ListPerso* pPathogens,ListPerso* pViralLoad){
     infectiousInd->getPathogens(pPathogens,pViralLoad);
+}
+
+long Model::getNewPathogenId(){
+    return pathogenListPerso->length()+1;
 }
 
 Pathogen* Model::getPathogenAdd(Pathogen* pPathogen){
@@ -722,6 +741,64 @@ void Model::writeCoinf(double* pPathogen,int pLength){
 float Model::getimmmunityPeriod(){
     return immmunityPeriod;
 }
+
+void Model::conversionSequence(int* pSeqInt,char* pSeqChar){
+    for(int i=0;i<genomeLength;i++){
+        if(pSeqInt[i]==0){
+            pSeqChar[i]='A';
+        }
+        if(pSeqInt[i]==1){
+            pSeqChar[i]='C';
+            
+        }
+        if(pSeqInt[i]==2){
+            pSeqChar[i]='T';
+            
+        }
+        if(pSeqInt[i]==3){
+            pSeqChar[i]='G';
+            
+        }
+    }
+    pSeqChar[(long)genomeLength]='\0';
+}
+
+/** Write all data about each agent*/
+void Model::writeSequenceData(){
+    char* lLine=new char[genomeLength*2];
+    char* lSequence=new char[genomeLength*2];
+    char lFileName[2048];
+    
+    sprintf(lFileName,"%s_sequences.dat",output);
+    FILE* lFileSeq=fopen(lFileName,"at");
+    sprintf(lFileName,"%s_tree.dat",output);
+    FILE* lFileTree=fopen(lFileName,"at");
+    cout<<"Writing file..."<<endl;
+    //Write sequence file
+    for(int i=0;i<pathogenListPerso->length();i++){
+        //Sequence recuperation
+        Pathogen* lPathogen=(Pathogen*)pathogenListPerso->getElement(i);
+        conversionSequence(lPathogen->getGenome(),lSequence);
+        sprintf(lLine,"%d\n%s\n",i,lSequence);
+        fwrite(lLine,1,strlen(lLine),lFileSeq);
+        //Parent recuperation
+        Pathogen* lPathogenParent=lPathogen;
+        sprintf(lLine,"%ld",lPathogenParent->getId());
+        lPathogenParent=lPathogenParent->getParent();
+        if(lPathogenParent!=NULL){
+            sprintf(lLine,"%s,%ld",lLine,lPathogenParent->getId());
+        }
+        sprintf(lLine,"%s\n",lLine);
+        fwrite(lLine,1,strlen(lLine),lFileTree);
+    }
+    fclose(lFileSeq);
+    fclose(lFileTree);
+    //Write relationship file
+    delete [] lLine;
+    delete [] lSequence;
+}
+
+
 
 /** Gettors*/
 Lake* Model::getLake(){return theLake;}

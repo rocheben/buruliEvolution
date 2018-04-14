@@ -1,4 +1,4 @@
-tMax	18250
+tMax	7300
 outputFolder	./
 nbThreads	1
 birdsFile	species_avian_evt_1_10.dat
@@ -10,5 +10,5 @@ ampLake	0.90000
 ampTransm	0.000000
 maxCrossImmunity	0.7
 reassortment	0.000000
-intervalMigration	50
+intervalMigration	0
 immunityPeriod	0

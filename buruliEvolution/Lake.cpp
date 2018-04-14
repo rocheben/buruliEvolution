@@ -23,6 +23,14 @@ Lake::~Lake(){
     delete viralLoad;
 }
 
+void Lake::evtEvolution(){
+    for(int lIndex=0;lIndex<pathogens->length();lIndex++){
+        Pathogen* lPathogen=(Pathogen*)(pathogens->getElement(lIndex));
+        lPathogen->mutation();
+    }
+    
+}
+
 /** Return pathogens drunk in the lake regarding the drinking volume and lake volume*/
 ListPerso* Lake::getPathogens(){
     return pathogens;

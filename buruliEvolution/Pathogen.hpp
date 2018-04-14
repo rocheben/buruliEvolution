@@ -16,6 +16,8 @@ class Pathogen;
 
 class Pathogen{
 private:
+    int* genome;
+    Pathogen* parent;
     float viralLoadNeeded;
     float probInfection;
     float recoveryPeriod;
@@ -28,6 +30,7 @@ private:
     Model* model;
     double sum;
     double subtype;
+    long ID;
 public:
     /** Crate new pathogen*/
     Pathogen(Pathogen* pPathogenMother);
@@ -47,5 +50,8 @@ public:
     Model* getmodel();
     bool samePathogenSequence(Pathogen* pPathogen);
     double getSum();
+    int* getGenome();
+    long getId();
+    Pathogen* getParent();
 };
 #endif

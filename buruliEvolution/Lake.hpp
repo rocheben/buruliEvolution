@@ -36,5 +36,6 @@ public:
     ListPerso* getViralLoad();
     void removeAllPathogens();
     int getNbPathogens();
+    void evtEvolution();
 };
 #endif

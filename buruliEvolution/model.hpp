@@ -61,7 +61,12 @@ private:
     double interceptInfPeriod;
     int modifyInfPeriod;
     float immmunityPeriod;
+    long genomeLength;
 public:
+    long getNewPathogenId();
+    long getGenomeLength();
+    void writeSequenceData();
+    void conversionSequence(int* pSeqInt,char* pSeqChar);
     void convertSequence(int* pSequence,char* pOut,int pLength);
     Model(char* pSuffixe,float pTimeStep);
     ~Model();
