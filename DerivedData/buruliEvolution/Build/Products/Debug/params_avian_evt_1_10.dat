@@ -1,0 +1,14 @@
+tMax	18250
+outputFolder	./
+nbThreads	1
+birdsFile	species_avian_evt_1_10.dat
+pathogensFile	pathogens_avian_evt_1_10.dat
+lakeVolume	1
+outputAll	1
+crossImmunity	1
+ampLake	0.90000
+ampTransm	0.000000
+maxCrossImmunity	0.7
+reassortment	0.000000
+intervalMigration	50
+immunityPeriod	0
